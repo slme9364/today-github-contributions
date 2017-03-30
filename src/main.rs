@@ -25,8 +25,6 @@ fn get_date() -> String {
     let mut date_cmd_str = str::from_utf8(&date_cmd.stdout).unwrap();
 
     date_cmd_str = str::trim_matches(date_cmd_str, '\n');
-    println!("Today: {}", date_cmd_str);
-
     let mut date_cmd_split: Vec<&str> = date_cmd_str.split(' ').collect();
 
     //github date -> yyyy-mm-dd
@@ -47,6 +45,7 @@ fn main() {
     //get date
     let today_string = get_date();
     let today = today_string.as_str();
+    println!("Today: {}", today);
 
     //find today contributions
     let mut find_today = false;
