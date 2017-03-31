@@ -1,6 +1,7 @@
 use std::process::Command;
 use std::str;
 
+//English -> num
 fn num_month(month_str: &str) -> &str {
     match month_str {
         "Jan" => "01",
@@ -21,9 +22,7 @@ fn num_month(month_str: &str) -> &str {
 
 fn get_date() -> String {
     let date_cmd = Command::new("date").output().unwrap();
-
     let mut date_cmd_str = str::from_utf8(&date_cmd.stdout).unwrap();
-
     date_cmd_str = str::trim_matches(date_cmd_str, '\n');
     let mut date_cmd_split: Vec<&str> = date_cmd_str.split(' ').collect();
 
