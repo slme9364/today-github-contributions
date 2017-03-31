@@ -34,19 +34,40 @@ fn get_date() -> String {
     date_string
 }
 
-fn main() {
-    //get contributions
-    let url = "https://github.com/users/slme9364/contributions";
-    let curl_cmd = Command::new("curl").arg(url).output().unwrap();
-    let curl_cmd_str = str::from_utf8(&curl_cmd.stdout).unwrap();
-
+fn get_today_contributions() -> Option<String> {
     //get date
     let today_string = get_date();
     let today = today_string.as_str();
     println!("Today: {}", today);
 
-    //find today contributions
-    if curl_cmd_str.contains(today) {
+    //get_contibution
+    let url = "https://github.com/users/slme9364/contributions";
+    let curl_cmd = Command::new("curl").arg(url).output().unwrap();
+    let curl_cmd_str = str::from_utf8(&curl_cmd.stdout).unwrap();
+
+    //str -> str(array)
+    let curl_cmd_split: Vec<&str> = curl_cmd_str.split('\n').collect();
+
+    //find_today_contribution
+    for i in 0..curl_cmd_split.len() {
+        if curl_cmd_split.contains(&today) {
+            let today_contribution = curl_cmd_split[i].to_string();
+            return Some(today_contribution);
+        }
+    }
+    None
+}
+
+fn main() {
+    //get_contibution
+    let contributions_string = match get_today_contributions() {
+        Some(contributions) => contributions,
+        None => String::new(),
+    };
+    let contributions_str = contributions_string.as_str();
+
+    //today_contribution judge
+    if contributions_str.contains("data-count=\"0\"") {
         println!("Congratulation!!");
     } else {
         println!("Commit Not yet");
