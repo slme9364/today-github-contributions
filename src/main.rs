@@ -65,12 +65,11 @@ fn main() {
         None => String::new(),
     };
     let contributions_str = contributions_string.as_str();
-
     //today_contribution judge
     if contributions_str.contains("data-count=\"0\"") {
-        println!("Congratulation!!");
-    } else {
         println!("Commit Not yet");
+    } else {
+        println!("Congratulation!!");
     }
 
 }
