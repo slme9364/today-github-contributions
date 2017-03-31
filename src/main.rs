@@ -50,7 +50,7 @@ fn get_today_contributions() -> Option<String> {
 
     //find_today_contribution
     for i in 0..curl_cmd_split.len() {
-        if curl_cmd_split.contains(&today) {
+        if curl_cmd_split[i].contains(&today) {
             let today_contribution = curl_cmd_split[i].to_string();
             return Some(today_contribution);
         }
