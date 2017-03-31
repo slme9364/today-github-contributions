@@ -11,7 +11,7 @@ fn main() {
     };
     let contributions_str = contributions_string.as_str();
     //today_contribution judge
-    if contributions_str.contains("data-count=\"0\"") {
+    if contributions_str.contains("data-count=\"0\"") || (contributions_str == "") {
         println!("Commit Not yet");
     } else {
         println!("Congratulation!!");
