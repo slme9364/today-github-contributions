@@ -9,7 +9,9 @@ pub fn get_today_contributions() -> Option<String> {
     println!("Today: {}", today);
 
     //get_contibution
-    let url = "https://github.com/users/slme9364/contributions";
+    let username = "slme9364";
+    println!("User: {}", username);
+    let url = ["https://github.com/users/", username, "/contributions"].join("");
     let curl_cmd = Command::new("curl").arg(url).output().unwrap();
     let curl_cmd_str = str::from_utf8(&curl_cmd.stdout).unwrap();
 
