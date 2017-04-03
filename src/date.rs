@@ -41,13 +41,13 @@ pub fn get_date() -> String {
     date_cmd_str = str::trim_matches(date_cmd_str, '\n');
     let mut date_cmd_split: Vec<&str> = date_cmd_str.split(' ').collect();
 
-    //github date -> yyyy-mm-dd
     //month Engish -> num
     date_cmd_split[1] = num_month(&date_cmd_split[1]);
 
     let date_string: String;
     let day: &str;
 
+    //github date -> yyyy-mm-dd
     if date_cmd_split[2] == "" {
         day = num_day(date_cmd_split[3]);
         date_string = [date_cmd_split[6], date_cmd_split[1], day].join("-");
