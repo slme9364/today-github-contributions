@@ -1,6 +1,23 @@
+use std::fs::File;
+use std::path::Path;
+use std::io::prelude::*;
 use std::process::Command;
 use std::str;
 use date;
+
+fn get_username() -> String {
+    //set file path
+    let file_path = Path::new("user.txt");
+
+    //open
+    let mut file = File::open(&file_path).unwrap();
+
+    //user.txt -> username
+    let mut username = String::new();
+    let _ = file.read_to_string(&mut username).unwrap();
+
+    username
+}
 
 pub fn get_today_contributions() -> Option<String> {
     //get date
@@ -9,7 +26,8 @@ pub fn get_today_contributions() -> Option<String> {
     println!("Today: {}", today);
 
     //set username
-    let username = "slme9364";
+    let username_string = get_username();
+    let username = username_string.as_str();
     println!("User: {}", username);
 
     //get_contibution
