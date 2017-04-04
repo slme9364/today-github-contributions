@@ -27,7 +27,8 @@ pub fn get_today_contributions() -> Option<String> {
 
     //set username
     let username_string = get_username();
-    let username = username_string.as_str();
+    let username_str = username_string.as_str();
+    let username = str::trim_matches(username_str, '\n');
     println!("User: {}", username);
 
     //get_contibution
