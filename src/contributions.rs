@@ -1,22 +1,25 @@
-use std::fs::File;
-use std::path::Path;
-use std::io::prelude::*;
 use std::process::Command;
 use std::str;
 use date;
 
-fn get_username() -> String {
-    //set file path
-    let file_path = Path::new("user.txt");
-
-    //open
-    let mut file = File::open(&file_path).unwrap();
-
-    //user.txt -> username
-    let mut username = String::new();
-    let _ = file.read_to_string(&mut username).unwrap();
-
-    username
+fn get_username() -> Option<String> {
+    let git_cmd = Command::new("git")
+        .arg("config")
+        .arg("--global")
+        .arg("--list")
+        .output()
+        .unwrap();
+    let git_str = str::from_utf8(&git_cmd.stdout).unwrap();
+    let git_vec: Vec<&str> = git_str.split('\n').collect();
+    let git_username: Vec<&str>;
+    for i in 0..git_vec.len() {
+        if git_vec[i].contains("user.name") {
+            git_username = git_vec[i].split('=').collect();
+            let username = git_username[1].to_string();
+            return Some(username);
+        }
+    }
+    None
 }
 
 pub fn get_today_contributions() -> Option<String> {
@@ -26,7 +29,7 @@ pub fn get_today_contributions() -> Option<String> {
     println!("Today: {}", today);
 
     //set username
-    let username_string = get_username();
+    let username_string = get_username().unwrap();
     let username_str = username_string.as_str();
     let username = str::trim_matches(username_str, '\n');
     println!("User: {}", username);
