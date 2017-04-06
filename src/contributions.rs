@@ -2,6 +2,7 @@ use std::process::Command;
 use std::str;
 use date;
 
+//get username from gitconfig
 fn get_username() -> Option<String> {
     let git_cmd = Command::new("git")
         .arg("config")
@@ -12,6 +13,8 @@ fn get_username() -> Option<String> {
     let git_str = str::from_utf8(&git_cmd.stdout).unwrap();
     let git_vec: Vec<&str> = git_str.split('\n').collect();
     let git_username: Vec<&str>;
+
+    //find user.name
     for i in 0..git_vec.len() {
         if git_vec[i].contains("user.name") {
             git_username = git_vec[i].split('=').collect();
